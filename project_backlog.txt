@@ -1,0 +1,87 @@
+P3A (PebblePad Python Playwright Automation) - Sprint Backlog
+
+Phase 1: Environment & Project Setup
+Goal: Establish the Python environment, file structure, and configuration management.
+
+TASK-1.1: Project Scaffolding & Dependencies
+* Status: COMPLETED
+
+TASK-1.2: Configuration Management (regex_rules.json)
+* Status: COMPLETED
+
+
+Phase 2: Data Validation & Pipeline (Offline Layer)
+Goal: Build a robust, offline data ingestion engine using Pydantic before touching the browser.
+
+TASK-2.1: Pydantic Schema & Sanitization Engine
+* Priority & Complexity: High / Medium
+* Objective: Define strict validation models for incoming data rows, handling multiple export formats and securing PII.
+* Technical Details: 
+   * Normalize input headers dynamically to support various export formats (e.g., "Date of Service" -> "Date", "A/I/O" -> "Role").
+   * Concatenated Parsing: Support RIS export models by utilizing Regex to extract NHI, DOB, and Sex from combined "Patient" strings.
+   * Explicitly strip "Patient Name" during initial parsing to ensure PII is never written to error or duplicate logs.
+   * Validate NHI numbers using ^[A-Z]{3}(\d{4}|\d{2}[A-Z]{2})$.
+   * Accept DD/MM/YY or DD/MM/YYYY date formatting, standardizing to DD/MM/YY and stripping time artifacts (e.g., 10:15).
+   * Handle dirty A/I/O data (coerce "Assisted" -> "A"). Explicitly reject unresolvable conflicts (e.g., "A, I").
+* DoD: Valid rows pass. Rows with unresolvable A/I/O conflicts or bad NHI/Dates are caught and written to validation_errors.csv without crashing the main script. PII is confirmed completely absent from all logs.
+* Status: COMPLETED
+
+TASK-2.2: A/I/O Matrix Translation
+* Status: COMPLETED
+
+TASK-2.3: Duplicate Prevention Engine
+* Status: COMPLETED
+
+TASK-2.4: Regex Categorizer (Binning) & Paediatric Intercept
+* Priority & Complexity: High / High
+* Objective: Sort novel data into internal PebblePad categories using regex, or bypass regex for age-dependent sorting.
+* Technical Details: Calculate patient age at the time of the exam using DOB and Exam Date. If Age <= 16, intercept the row, set target page to "Paediatrics," and assign to age-appropriate table bucket. For adults, strictly search the "Examination Type" using Python's re module against regex_rules.json. 
+* DoD: Data is binned correctly by age or string matching. Rows that fail to match any rule are moved to uncategorised-examinations.csv.
+* Status: COMPLETED
+
+
+Phase 3: CLI & Testing Mode
+Goal: Implement terminal controls and dry-run capabilities.
+
+TASK-3.1: CLI Argument Parsing
+* Status: COMPLETED
+
+TASK-3.2: Dry-Run Mode (--test)
+* Status: COMPLETED
+
+
+Phase 4: Playwright & Authentication
+Goal: Handle browser launch, modular SSO login, and navigation caching.
+
+TASK-4.1: Browser Initialization & Modular Authentication
+* Status: COMPLETED
+
+TASK-4.2: Navigation Mapping, Template Selection & Caching
+* Status: COMPLETED
+
+
+Phase 5: Angular Automation Engine
+Goal: Interact with the PebblePad UI, dispatch events, and save data.
+
+TASK-5.1: Custom Grid Targeting & Dynamic Row Management
+* Status: COMPLETED
+
+TASK-5.2: Angular Event Dispatching (Human Emulation)
+* Status: COMPLETED
+
+TASK-5.3: Save Mechanism & Logging
+* Priority & Complexity: High / Medium
+* Objective: Commit data to PebblePad and record success.
+* Technical Details: Click the PebblePad save button ONCE per table iteration to optimize performance. Implement an explicit time.sleep(4) to accommodate PebblePad's debounced background syncing. Append the successfully saved array of rows to internal_database.csv simultaneously.
+* DoD: UI reflects a saved state, and internal_database.csv is updated in bulk, ensuring the script is idempotent if restarted while maintaining high performance.
+* Status: COMPLETED
+
+TASK-5.4: Angular Datepicker Isolate Scope Injection
+* Status: COMPLETED
+
+
+Phase 6: Finalization
+Goal: Reporting and final checks.
+
+TASK-6.1: Terminal Summary Reporting
+* Status: COMPLETED

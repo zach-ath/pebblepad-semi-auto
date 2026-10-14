@@ -1,0 +1,21 @@
+# Environments
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+.idea/
+
+# PebblePad Data & Secrets
+.env
+outputs/*.csv
+!outputs/.gitkeep
+inputs/*.csv
+!inputs/.gitkeep
+
+#Pebblepad Pyinstaller
+dist/
+Build/

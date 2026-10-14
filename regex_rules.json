@@ -1,0 +1,212 @@
+{
+  "head_exam": {
+    "keywords": [
+      "skull",
+      "orbits",
+      "facial bone",
+      "tmj",
+      "mandible",
+      "opg",
+      "facial bones",
+      "cone beam",
+      "ct"
+    ],
+    "page": "Head",
+    "table_aria_label": "Head"
+  },
+  "upper_limb": {
+    "keywords": [
+      "hand",
+      "finger",
+      "Thumb",
+      "wrist",
+      "scaphoid",
+      "carpal",
+      "forearm",
+      "elbow",
+      "humerus",
+      "upper limb"
+    ],
+    "page": "Appendicular skeleton",
+    "table_aria_label": "Upper limb (excluding shoulder)"
+  },
+  "shoulder": {
+    "keywords": [
+      "shoulder",
+      "clavicle",
+      "ac joint"
+    ],
+    "page": "Appendicular skeleton",
+    "table_aria_label": "shoulder"
+  },
+  "lower_limb": {
+    "keywords": [
+      "femur",
+      "knee",
+      "knees",
+      "tibia",
+      "fibula",
+      "ankle",
+      "foot",
+      "toe",
+      "calcaneus",
+      "lower limb"
+    ],
+    "page": "Appendicular skeleton",
+    "table_aria_label": "Lower limb (excluding hip)"
+  },
+  "pelvis_hip": {
+    "keywords": [
+      "pelvis",
+      "hip",
+      "hips"
+    ],
+    "page": "Appendicular skeleton",
+    "table_aria_label": "pelvis/hip"
+  },
+  "cervical_spine": {
+    "keywords": [
+      "cervical",
+      "c-spine"
+    ],
+    "page": "Vertebral column log",
+    "table_aria_label": "Cervical spine"
+  },
+  "thoracic_spine": {
+    "keywords": [
+      "thoracic spine",
+      "t-spine"
+    ],
+    "page": "Vertebral column log",
+    "table_aria_label": "Thoracic spine"
+  },
+  "lumbar_spine": {
+    "keywords": [
+      "lumbar",
+      "l-spine"
+    ],
+    "page": "Vertebral column log",
+    "table_aria_label": "Lumbar spine"
+  },
+  "cervicothoracic_spine": {
+    "keywords": [
+      "cervicothoracic"
+    ],
+    "page": "Vertebral column log",
+    "table_aria_label": "Cervicothoracic spine"
+  },
+  "whole_spine": {
+    "keywords": [
+      "whole spine"
+    ],
+    "page": "Vertebral column log",
+    "table_aria_label": "Whole spine"
+  },
+  "si_joints": {
+    "keywords": [
+      "si joint",
+      "sacrum",
+      "coccyx"
+    ],
+    "page": "Vertebral column log",
+    "table_aria_label": "SI joints/sacrum/coccyx"
+  },
+  "chest": {
+    "keywords": [
+      "chest",
+      "cxr"
+    ],
+    "page": "Thorax",
+    "table_aria_label": "chest"
+  },
+  "ribs": {
+    "keywords": [
+      "ribs"
+    ],
+    "page": "Thorax",
+    "table_aria_label": "ribs"
+  },
+  "sternum": {
+    "keywords": [
+      "sternum"
+    ],
+    "page": "Thorax",
+    "table_aria_label": "sternum"
+  },
+  "sc_joints": {
+    "keywords": [
+      "sc joint",
+      "sternoclavicular"
+    ],
+    "page": "Thorax",
+    "table_aria_label": "SC joints"
+  },
+  "abdomen_supine": {
+    "keywords": [
+      "abdomen",
+      "supine"
+    ],
+    "page": "Abdomen",
+    "table_aria_label": "Supine only"
+  },
+  "mobile_chest": {
+    "keywords": [
+      "mobile chest",
+      "portable chest"
+    ],
+    "page": "Mobiles (portables)",
+    "table_aria_label": "Chest"
+  },
+  "theatre_c_arm": {
+    "keywords": [
+      "theatre",
+      "c-arm"
+    ],
+    "page": "Theatre",
+    "table_aria_label": "C-arm procedure"
+  },
+  "paeds_0_2": {
+    "keywords": [
+      "paediatric",
+      "infant",
+      "toddler"
+    ],
+    "page": "Paediatrics",
+    "table_aria_label": "0-2 years old"
+  },
+  "ct_head": {
+    "keywords": [
+      "ct head"
+    ],
+    "page": "CT log",
+    "table_aria_label": "CT head"
+  },
+  "mri": {
+    "keywords": [
+      "mri",
+      "magnetic resonance"
+    ],
+    "page": "Specialised log",
+    "table_aria_label": "MRI"
+  },
+  "trauma": {
+    "keywords": [
+      "trauma",
+      "mva",
+      "resus",
+      "poly-trauma"
+    ],
+    "page": "Trauma",
+    "table_aria_label": "Trauma log"
+  },
+  "fluoroscopy": {
+    "keywords": [
+      "fluoro",
+      "barium",
+      "screening",
+      "swallow"
+    ],
+    "page": "Fluoroscopy",
+    "table_aria_label": "Fluoroscopy procedures"
+  }
+}

@@ -1,0 +1,41 @@
+Product Requirements Document (PRD)
+Product Name: PebblePad Python Playwright Automation (P3A)
+Version: 2.5.0 (RIS Concatenation & Paediatric Rules Included)
+Last Updated: October 12, 2026
+
+1. Objective
+To fully automate the transfer of structured medical logbook data from a CSV file into PebblePad workbooks. PebblePad utilizes a heavily customized, non-standard Angular grid system (using nested div elements rather than standard HTML tables), which blocks traditional multi-row pasting.
+By utilizing a Python + Playwright environment, the system provides headless (or headed) browser control, robust offline data manipulation (via Pydantic/Pandas), and the ability to systematically bypass Angular's UI limitations via strict JSON DOM parsing, scoped locators, and direct JavaScript event dispatching.
+
+2. Core Features
+
+2.1. Intelligent Auto-Categorization (Nested Regex Engine)
+* Pre-processing: The script ingests the target CSV and scans the "Examination Type" column (explicitly ignoring clinical indications to prevent false positives, e.g., mapping a chest x-ray to hips due to "hip replacement" history).
+* Nested Binning: Utilizes Python's native re module to automatically sort rows. Unlike flat categorizers, it outputs a nested mapping indicating both the target Page Title and the specific Table aria-label required by the automation engine.
+* Custom Configuration: Regex rules are stored in an external regex_rules.json file, preventing hardcoded logic and allowing users to tweak keywords.
+
+2.2. Paediatric Intercept (Date Math)
+* Dynamic Age Calculation: The offline pipeline calculates the patient's exact age at the time of the examination by comparing the extracted DOB to the Service Date.
+* Regex Override: If the calculated age is 16 or under, the system explicitly bypasses the standard keyword Regex logic, overriding the target page to "Paediatrics" and automatically slotting the patient into the correct age-bracket table (e.g., "0-2 years old", "3 - 5 years").
+
+2.3. Angular-Aware DOM Interaction & Scoping
+* Scoped Grid Detection: A single page may contain multiple log tables. Playwright will scope locators to specific sub-tables using parent accessibility tags (e.g., section[aria-label="{target_table_name}"]) before targeting Angular classes like .table-el-wrapper.
+* Dynamic Row Management: The script strictly anchors to integer indices (e.g., prev_count - 1) rather than using lazy "last" locators to ensure mutations in the Angular DOM do not cause the bot to drift to a different row mid-injection.
+* Event Dispatching: The bot utilizes native human-emulation actions (click, fill, and press('Tab')) to guarantee Angular's listeners recognize the input and fire digest cycles.
+
+2.4. Duplicate Prevention Engine (Offline First)
+* Offline Validation Flow: Before browser interaction, the script cross-references new CSV data against internal_database.csv (which logs previously entered records).
+* Filtering: It checks the combination of NHI number, Date, and Examination Type.
+* Outcome: Completely novel data is passed to the Regex Engine. Data matching the internal database is flagged as a duplicate, skipped, and logged to duplicates_skipped.csv.
+
+2.5. Data Validation, Sanitization & Privacy (Pydantic)
+* Concatenated String Extraction (RIS Export Support): The script is column-agnostic. If strict headers are missing, it searches for a concatenated "Patient" column. It utilizes regex to dynamically extract the NHI number, DOB, and Sex from the single string while explicitly abandoning the patient name to secure Personally Identifiable Information (PII).
+* Time Artifact Stripping: Automatically cleans timestamps from dates (e.g., "30/09/2026 10:17" becomes "30/09/26").
+* NHI Number Format: Must support both legacy and new NZ Ministry of Health formats using the regex ^[A-Z]{3}(\d{4}|\d{2}[A-Z]{2})$.
+* Date Format: Accepts both DD/MM/YYYY (4-digit year) and DD/MM/YY (2-digit year) formatting, standardizing the final output to DD/MM/YY for PebblePad ingestion.
+* A/I/O Matrix Handling: Translates string inputs to strict numerical arrays (A -> [0, 1, 0], I -> [0, 0, 1], O -> [1, 0, 0]). Coerces variations like "Assisted" to A. Unresolvable conflicts (e.g., "A, I") explicitly reject the row, sending it to validation_errors.csv.
+
+2.6. Hybrid Navigation Mapping & Caching
+* Active Routing: Resolves URL targets by querying the visible DOM for specific `<navigation-item>` Angular tags or specific inner `<span>` attributes (`span.navigation-item__title`).
+* Template Resolution: Clicks through to the category hubs and triggers the master template generation link.
+* Caching: Automatically triggers a "Save" event to lock the temporary URL into PebblePad's database, then caches the absolute URLs to Workbook_log_pages.csv to bypass discovery on subsequent runs.
